@@ -47,7 +47,9 @@ val repositoryModules = module {
 
 val viewModelModules = module {
     viewModel {
-        MainActivityViewModel()
+        LoginActivityViewModel()
+    }
+    viewModel {
         LoginActivityViewModel()
     }
 }
