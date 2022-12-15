@@ -85,8 +85,8 @@ class LoginActivityViewModel : BaseViewModel() {
                     if(_loginResponse.value!!.errorCode==errorCode.errorCode00.code){
                         database.demoDao.insertDemo( Demo(
                             loginResponseResult.value!!.data.userId,
-                            _loginRetrofitResponse.value!!.headers()["X-Acc"]!!,
                             loginResponseResult.value!!.data.userId,
+                            _loginRetrofitResponse.value!!.headers()["X-Acc"]!!,
                             loginResponseResult.value!!.data.userName,
                             loginResponseResult.value!!.data.isDeleted
                         ))
