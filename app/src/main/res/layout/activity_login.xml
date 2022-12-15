@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivLogo"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic__logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etUserName"
+        android:layout_width="match_parent"
+        android:hint="@string/username"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/ic_edit_feild_background"
+        android:layout_marginEnd="20dp"
+        android:paddingTop="15dp"
+        android:paddingStart="10dp"
+        android:paddingBottom="15dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingTop="15dp"
+        android:paddingStart="10dp"
+        android:paddingBottom="15dp"
+        android:background="@drawable/ic_edit_feild_background"
+        app:layout_constraintEnd_toEndOf="@+id/etUserName"
+        app:layout_constraintStart_toStartOf="@+id/etUserName"
+        app:layout_constraintTop_toBottomOf="@+id/etUserName" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:id="@+id/cvLoginButton"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#3F51B5"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/etUserName"
+        app:layout_constraintStart_toStartOf="@+id/etUserName"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="15dp"
+            android:text="@string/login" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/etUserName"
+        app:layout_constraintStart_toStartOf="@+id/etUserName"
+        app:layout_constraintTop_toBottomOf="@+id/cvLoginButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>
