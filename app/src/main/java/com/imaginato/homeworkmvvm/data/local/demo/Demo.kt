@@ -7,7 +7,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Demo")
 data class Demo(
     @PrimaryKey
-    val id: Long,
+    val id: String,
+    @ColumnInfo(name = "userId") var userId: String,
+    @ColumnInfo(name = "xAcc") var xAcc: String,
     @ColumnInfo(name = "name") var name: String,
     @ColumnInfo(name = "isDeleted") var isDeleted: Boolean
+
 )

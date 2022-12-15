@@ -22,14 +22,13 @@ class DemoDataRepository constructor(
         emit(response.ipAddress ?: NOTHING_GET)
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun login(userName:String,password:String):LoginResponse{
+    override suspend fun login(userName:String,password:String) = flow{
         val parameter:HashMap<String,Any> = hashMapOf()
         parameter["username"] =userName
         parameter["password"] =password
         val response = api.loginApi(URL_LOGIN,parameter).await()
-        return response
-
-    }
+         emit(response)
+     }.flowOn(Dispatchers.IO)
 
 
 

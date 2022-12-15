@@ -9,8 +9,14 @@ import com.imaginato.homeworkmvvm.data.remote.demo.DemoRepository
 import com.imaginato.homeworkmvvm.data.remote.demo.response.LoginResponse
 import com.imaginato.homeworkmvvm.exts.ENTER_PASSWORD
 import com.imaginato.homeworkmvvm.exts.ENTER_USER_NAME
+import com.imaginato.homeworkmvvm.exts.errorCode
 import com.imaginato.homeworkmvvm.ui.base.BaseViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.inject
 
@@ -18,8 +24,10 @@ import org.koin.core.component.inject
 class LoginActivityViewModel : BaseViewModel() {
     private val repository: DemoRepository by inject()
     private var _progress: MutableLiveData<Boolean> = MutableLiveData()
+    private var _loginRetrofitResponse :MutableLiveData<retrofit2.Response<LoginResponse>> = MutableLiveData()
     private var _loginResponse :MutableLiveData<LoginResponse> = MutableLiveData()
     private var _errorMessage :MutableLiveData<String> = MutableLiveData()
+    private val database: DemoDatabase by inject()
 
     val progress: LiveData<Boolean>
         get() {
@@ -58,11 +66,36 @@ class LoginActivityViewModel : BaseViewModel() {
      * */
 
     fun login(userName:String,password:String) {
-        _progress.value = true
         viewModelScope.launch {
-            _loginResponse.value = repository.login(userName,password)
+            repository.login(userName,password)
+                .onStart {
+                    _progress.value = true
 
-            _progress.value = false
+                }.catch {
+                    _progress.value = true
+
+                }
+                .onCompletion {
+                    _progress.value = true
+
+                }.collect {
+                    _progress.value = false
+                    _loginRetrofitResponse.value = it
+                    _loginResponse.value = _loginRetrofitResponse.value!!.body()
+                    if(_loginResponse.value!!.errorCode==errorCode.errorCode00.code){
+                        database.demoDao.insertDemo( Demo(
+                            loginResponseResult.value!!.data.userId,
+                            _loginRetrofitResponse.value!!.headers()["X-Acc"]!!,
+                            loginResponseResult.value!!.data.userId,
+                            loginResponseResult.value!!.data.userName,
+                            loginResponseResult.value!!.data.isDeleted
+                        ))
+                    }
+
+
+
+                }
+
 
 
         }

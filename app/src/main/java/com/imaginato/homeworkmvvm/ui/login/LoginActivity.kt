@@ -14,7 +14,6 @@ import org.koin.core.component.inject
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModel<LoginActivityViewModel>()
     private lateinit var binding: ActivityLoginBinding
-    private val database: DemoDatabase by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +30,6 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.loginResponseResult.observe(this){
             Toast.makeText(applicationContext,"${it.errorMessage}",Toast.LENGTH_SHORT).show()
-            database.demoDao.insertDemo(Demo(it.data.userId.toLong(),it.data.userName,it.data.isDeleted))
 
 
 
